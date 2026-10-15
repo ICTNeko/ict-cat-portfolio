@@ -1,0 +1,167 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --font-serif: "Noto Serif JP", serif;
+  --font-sans: "Inter", "Noto Sans JP", sans-serif;
+  --font-display: "Playfair Display", serif;
+}
+
+:root {
+  /* Komorebi Cafe Palette: Sun-drenched White & Forest Green & Natural Oak */
+  --background: #fdfcf8; /* Sun-drenched White */
+  --foreground: #2d3436; /* Soft Charcoal */
+  
+  --primary: #2d4a3e; /* Forest Leaf Green */
+  --primary-foreground: #fdfcf8;
+  
+  --secondary: #f7f3e9; /* Light Oak/Sand */
+  --secondary-foreground: #4a4a4a;
+  
+  --muted: #e9e5d8;
+  --muted-foreground: #7f8c8d;
+  
+  --accent: #b89c6d; /* Warm Oak Gold */
+  --accent-foreground: #ffffff;
+  
+  --card: #ffffff;
+  --card-foreground: #2d3436;
+  
+  --border: #e0dcd0;
+  --input: #e0dcd0;
+  --ring: #2d4a3e;
+  
+  --radius: 0.5rem; /* Softer corners for a cozy cafe feel */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    /* Natural Paper/Linen texture with a subtle glow */
+    background-color: #fdfcf8;
+    background-image: 
+      url("https://www.transparenttextures.com/patterns/natural-paper.png"),
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(45,74,62,0.02) 0%, transparent 50%);
+    background-attachment: fixed;
+    background-blend-mode: overlay, normal, normal;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif tracking-tight text-primary;
+    text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.5);
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-6xl mx-auto px-8 md:px-16;
+  }
+  
+  .section-padding {
+    @apply py-32 md:py-48;
+  }
+  
+  .cafe-line {
+    @apply h-[1px] bg-primary/10 w-full relative;
+  }
+  
+  .cafe-line::after {
+    content: '';
+    @apply absolute top-[2px] left-0 h-[0.5px] bg-primary/5 w-full;
+  }
+  
+  .section-number {
+    @apply font-display italic text-accent text-xl md:text-2xl;
+    letter-spacing: 0.1em;
+  }
+
+  .btn-cafe {
+    @apply rounded-full px-12 py-6 text-[11px] font-bold uppercase tracking-[0.3em] transition-all duration-500 border border-primary/20 hover:border-primary hover:bg-primary hover:text-white;
+    box-shadow: 0 4px 15px -5px rgba(45,74,62,0.2);
+  }
+
+  .wood-gradient {
+    background: linear-gradient(135deg, #b89c6d 0%, #d4c19c 50%, #b89c6d 100%);
+  }
+
+  .text-forest {
+    @apply text-primary;
+  }
+
+  .specimen-frame {
+    @apply bg-white p-6 md:p-10 shadow-[0_20px_60px_-15px_rgba(45,74,62,0.1)] border-[0.5px] border-border/50 relative overflow-hidden rounded-lg;
+  }
+
+  .specimen-frame::before {
+    content: '';
+    @apply absolute inset-0 border-[1px] border-primary/5 m-3 pointer-events-none rounded-md;
+  }
+
+  /* Cafe Memo Style */
+  .cafe-memo {
+    @apply bg-[#fffef7] p-6 md:p-8 border-[0.5px] border-primary/10 shadow-[2px_4px_15px_rgba(0,0,0,0.03)] relative transition-transform duration-500 rounded-sm;
+    background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+  }
+
+  .cafe-memo::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-accent/20;
+  }
+}
+
+/* Komorebi Shadow Animation */
+@keyframes komorebi {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.05; }
+  50% { transform: translate(2%, 2%) rotate(2deg) scale(1.05); opacity: 0.08; }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.05; }
+}
+
+.komorebi-overlay {
+  @apply fixed inset-0 pointer-events-none z-[-1];
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  mask-image: radial-gradient(circle at 30% 30%, black 0%, transparent 70%);
+  opacity: 0.05;
+  animation: komorebi 20s ease-in-out infinite;
+}
+
+/* Transitions */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

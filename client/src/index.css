@@ -1,0 +1,429 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --font-serif: "Noto Serif JP", serif;
+  --font-sans: "Inter", "Noto Sans JP", sans-serif;
+  --font-display: "Playfair Display", serif;
+}
+
+:root {
+  /* Komorebi Cafe Palette: Sun-drenched White & Forest Green & Natural Oak */
+  --background: #fdfcf8; /* Sun-drenched White */
+  --foreground: #2d3436; /* Soft Charcoal */
+  
+  --primary: #2d4a3e; /* Forest Leaf Green */
+  --primary-foreground: #fdfcf8;
+  
+  --secondary: #f7f3e9; /* Light Oak/Sand */
+  --secondary-foreground: #3f4943;
+  
+  --muted: #e9e5d8;
+  --muted-foreground: #5e6a63;
+  
+  --accent: #8f7045; /* Warm Oak Gold — darker for reliable contrast */
+  --accent-foreground: #ffffff;
+  
+  --card: #ffffff;
+  --card-foreground: #2d3436;
+  
+  --border: #d2cbbb;
+  --input: #e0dcd0;
+  --ring: #2d4a3e;
+  
+  --radius: 0.5rem; /* Softer corners for a cozy cafe feel */
+}
+
+.dark {
+  --background: #1d211f;
+  --foreground: #f4efe4;
+  --primary: #d8c39b;
+  --primary-foreground: #1d211f;
+  --secondary: #2a302c;
+  --secondary-foreground: #f4efe4;
+  --muted: #343a35;
+  --muted-foreground: #c8c2b5;
+  --accent: #d0a86d;
+  --accent-foreground: #1d211f;
+  --card: #252b27;
+  --card-foreground: #f4efe4;
+  --border: #4b5149;
+  --input: #414841;
+  --ring: #d0a86d;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    /* Natural Paper/Linen texture with a subtle glow */
+    background-color: #fdfcf8;
+    background-image: 
+      url("https://www.transparenttextures.com/patterns/natural-paper.png"),
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(45,74,62,0.02) 0%, transparent 50%);
+    background-attachment: fixed;
+    background-blend-mode: overlay, normal, normal;
+  }
+  .dark body {
+    background-color: #1d211f;
+    background-image:
+      url("https://www.transparenttextures.com/patterns/natural-paper.png"),
+      radial-gradient(circle at 20% 20%, rgba(208,168,109,0.08) 0%, transparent 48%),
+      radial-gradient(circle at 80% 80%, rgba(0,0,0,0.28) 0%, transparent 55%);
+    background-blend-mode: soft-light, normal, normal;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif tracking-tight text-primary;
+    text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.5);
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply max-w-6xl mx-auto px-8 md:px-16;
+  }
+  
+  .section-padding {
+    @apply py-32 md:py-48;
+  }
+  
+  .cafe-line {
+    @apply h-[1px] bg-primary/10 w-full relative;
+  }
+  
+  .cafe-line::after {
+    content: '';
+    @apply absolute top-[2px] left-0 h-[0.5px] bg-primary/5 w-full;
+  }
+  
+  .section-number {
+    @apply font-display italic text-accent text-xl md:text-2xl;
+    letter-spacing: 0.1em;
+  }
+
+  .btn-cafe {
+    @apply rounded-full px-12 py-6 text-[11px] font-bold uppercase tracking-[0.3em] transition-all duration-500 border border-primary/20 hover:border-primary hover:bg-primary hover:text-white;
+    box-shadow: 0 4px 15px -5px rgba(45,74,62,0.2);
+  }
+
+  .wood-gradient {
+    background: linear-gradient(135deg, #b89c6d 0%, #d4c19c 50%, #b89c6d 100%);
+  }
+
+  .text-forest {
+    @apply text-primary;
+  }
+
+  .specimen-frame {
+    @apply bg-white p-6 md:p-10 shadow-[0_20px_60px_-15px_rgba(45,74,62,0.1)] border-[0.5px] border-border/50 relative overflow-hidden rounded-lg;
+  }
+
+  .specimen-frame::before {
+    content: '';
+    @apply absolute inset-0 border-[1px] border-primary/5 m-3 pointer-events-none rounded-md;
+  }
+
+  /* Cafe Memo Style */
+  .cafe-memo {
+    @apply bg-[#fffef7] p-6 md:p-8 border-[0.5px] border-primary/10 shadow-[2px_4px_15px_rgba(0,0,0,0.03)] relative transition-transform duration-500 rounded-sm;
+    background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+  }
+
+  .cafe-memo::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-1 bg-accent/20;
+  }
+}
+
+/* Komorebi Editorial Cafe — static profile timeline: a quiet, high-contrast record of books and KindEd. */
+.profile-timeline {
+  position: relative;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.profile-timeline::before {
+  content: "";
+  position: absolute;
+  left: 1.25rem;
+  top: 1.25rem;
+  bottom: 1.25rem;
+  width: 1px;
+  background: rgba(45, 74, 62, 0.28);
+}
+
+.profile-timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem 7.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.profile-timeline-marker {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  background: var(--secondary);
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.profile-timeline-year {
+  padding-top: 0.65rem;
+  color: var(--primary);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+}
+
+.profile-timeline-card {
+  min-width: 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid rgba(45, 74, 62, 0.2);
+  background: rgba(255, 254, 247, 0.92);
+  box-shadow: 0.35rem 0.45rem 0 rgba(45, 74, 62, 0.06), 0 0.8rem 1.8rem rgba(45, 74, 62, 0.07);
+}
+
+@media (max-width: 639px) {
+  .profile-timeline {
+    gap: 1.15rem;
+  }
+
+  .profile-timeline::before {
+    left: 0.85rem;
+    top: 0.9rem;
+    bottom: 0.9rem;
+  }
+
+  .profile-timeline-item {
+    grid-template-columns: 1.7rem minmax(0, 1fr);
+    gap: 0.35rem 0.9rem;
+  }
+
+  .profile-timeline-marker {
+    width: 1.7rem;
+    height: 1.7rem;
+    font-size: 0.52rem;
+  }
+
+  .profile-timeline-year {
+    grid-column: 2;
+    padding-top: 0.1rem;
+    font-size: 0.62rem;
+  }
+
+  .profile-timeline-card {
+    grid-column: 2;
+    padding: 1rem;
+  }
+}
+
+/* Komorebi Shadow Animation */
+@keyframes komorebi {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.05; }
+  50% { transform: translate(2%, 2%) rotate(2deg) scale(1.05); opacity: 0.08; }
+  100% { transform: translate(0, 0) rotate(0deg) scale(1); opacity: 0.05; }
+}
+
+.komorebi-overlay {
+  @apply fixed inset-0 pointer-events-none z-[-1];
+  background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  mask-image: radial-gradient(circle at 30% 30%, black 0%, transparent 70%);
+  opacity: 0.05;
+  animation: komorebi 20s ease-in-out infinite;
+}
+
+/* Transitions */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Visual Bookshelf update: the bookshop atmosphere is built from quiet scale, not oversized covers. Keep cover objects tactile, framed, and surrounded by paper space. */
+.hero-shelf-frame {
+  position: relative;
+  padding: clamp(1.1rem, 3vw, 2rem);
+  background: rgba(250, 247, 238, 0.9);
+  border: 1px solid rgba(45, 74, 62, 0.16);
+  box-shadow: 18px 22px 0 rgba(45, 74, 62, 0.06), 0 28px 70px rgba(45, 74, 62, 0.12);
+  transform: rotate(1.2deg);
+}
+
+.hero-shelf-frame::before,
+.hero-shelf-frame::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid rgba(184, 156, 109, 0.44);
+}
+
+.hero-shelf-frame::before { inset: 0.55rem; }
+.hero-shelf-frame::after { inset: 0.78rem; border-color: rgba(45, 74, 62, 0.08); }
+
+.hero-shelf-label,
+.hero-shelf-caption {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  color: rgba(45, 74, 62, 0.68);
+  text-transform: uppercase;
+}
+
+.hero-shelf-label { padding: 0 0.55rem 1rem; border-bottom: 1px solid rgba(45, 74, 62, 0.16); }
+.hero-shelf-caption { padding: 1rem 0.55rem 0; border-top: 1px solid rgba(45, 74, 62, 0.16); color: rgba(45, 74, 62, 0.8); }
+.hero-shelf-caption span:first-child { font-family: var(--font-serif); font-size: 0.92rem; letter-spacing: 0.08em; text-transform: none; }
+.hero-shelf-caption span:last-child { color: rgba(184, 156, 109, 0.95); letter-spacing: 0.12em; }
+
+.hero-shelf-stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(0.5rem, 2.3vw, 1.1rem);
+  min-height: clamp(250px, 34vw, 370px);
+  padding: 1.5rem 0.25rem 1.75rem;
+}
+
+.hero-shelf-stage::after {
+  content: "";
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: 0.9rem;
+  height: 0.65rem;
+  background: linear-gradient(180deg, #9d7448, #704a2a);
+  box-shadow: 0 0.35rem 0 rgba(67, 45, 29, 0.13);
+}
+
+.hero-cover {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: clamp(74px, 15vw, 142px);
+  aspect-ratio: 0.704;
+  overflow: hidden;
+  background: #eee7d8;
+  border: 0.35rem solid #f8f3e7;
+  box-shadow: 0.35rem 0.55rem 0 rgba(36, 42, 34, 0.12), 0 0.8rem 1.8rem rgba(45, 74, 62, 0.18);
+  transition: transform 420ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 420ms ease;
+}
+
+.hero-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-cover:hover,
+.hero-cover:focus-visible { transform: translateY(-0.8rem) rotate(0deg) !important; box-shadow: 0.45rem 1rem 0 rgba(36, 42, 34, 0.13), 0 1.4rem 2.6rem rgba(45, 74, 62, 0.2); }
+.hero-cover-0 { transform: rotate(-6deg) translateY(0.7rem); }
+.hero-cover-1 { transform: rotate(1deg) translateY(-0.15rem); }
+.hero-cover-2 { transform: rotate(6deg) translateY(0.7rem); }
+.hero-cover-tag { position: absolute; top: 0.45rem; right: 0.45rem; min-width: 1.2rem; padding: 0.18rem 0.22rem; background: rgba(250, 247, 238, 0.9); color: #2d4a3e; font-family: var(--font-display); font-size: 0.55rem; text-align: center; }
+
+.book-card-frame { isolation: isolate; }
+.book-spine-shadow { position: absolute; top: 0.45rem; bottom: 0.45rem; right: 0.2rem; width: 0.25rem; background: linear-gradient(90deg, transparent, rgba(45, 74, 62, 0.16)); pointer-events: none; }
+.book-cover-missing { background: linear-gradient(135deg, #ece1c9, #f7f0df 56%, #dce1cf); border: 1px solid rgba(45, 74, 62, 0.16); }
+
+@media (max-width: 639px) {
+  .hero-shelf-frame { width: min(100%, 390px); transform: rotate(0deg); padding: 0.9rem; }
+  .hero-shelf-stage { min-height: 220px; padding-top: 1.2rem; }
+  .hero-cover { width: clamp(64px, 23vw, 94px); border-width: 0.25rem; }
+  .hero-shelf-label, .hero-shelf-caption { font-size: 0.45rem; letter-spacing: 0.18em; }
+  .hero-shelf-caption span:first-child { font-size: 0.78rem; }
+  .bookshelf-grid { row-gap: 4.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cover { transition: none; }
+}
+
+/* Bookshelf rhythm: each cover sits on a quiet wooden rail so the archive feels curated, not oversized. */
+.bookshelf-grid { position: relative; }
+.bookshelf-grid .book-card-frame::after {
+  content: "";
+  position: absolute;
+  left: -0.9rem;
+  right: -0.9rem;
+  bottom: -1rem;
+  height: 0.28rem;
+  background: linear-gradient(180deg, #c39a66 0%, #987047 48%, #6d4a2f 100%);
+  box-shadow: 0 0.35rem 0 rgba(73, 52, 34, 0.12);
+  z-index: -1;
+}
+
+.bookshelf-grid .book-card-frame::before {
+  content: "";
+  position: absolute;
+  left: 0.5rem;
+  bottom: -0.72rem;
+  width: 0.35rem;
+  height: 0.45rem;
+  background: rgba(255, 248, 228, 0.82);
+  box-shadow: 0 0 0 1px rgba(184, 156, 109, 0.28);
+  z-index: 1;
+}
+
+.dark .bg-white,
+.dark .bg-\[\#fffef7\] { background-color: var(--card); }
+.dark .bg-\[\#faf7ee\] { background-color: #2b302b; }
+.dark .bg-\[\#eee7d8\] { background-color: #343a35; }
+.dark .cafe-memo { background-color: #2a302c; background-image: none; }
+.dark .hero-shelf-frame { background: rgba(37, 43, 39, 0.94); }
+.dark .hero-shelf-caption, .dark .hero-shelf-label { color: rgba(244, 239, 228, 0.78); border-color: rgba(216, 195, 155, 0.25); }
+.dark .profile-timeline-card { background: rgba(37, 43, 39, 0.94); border-color: rgba(216, 195, 155, 0.28); }
+.dark select option { background: #252b27; color: #f4efe4; }
+
+@media (max-width: 639px) {
+  .bookshelf-grid .book-card-frame::after { left: -0.5rem; right: -0.5rem; }
+}
