@@ -1,0 +1,84 @@
+name: Expand portfolio source archive
+
+
+
+on:
+
+  push:
+  
+    branches: [main]
+    
+
+
+permissions:
+
+  contents: write
+  
+
+
+jobs:
+
+  expand-source:
+  
+    if: ${{ contains(github.event.head_commit.message, 'Add portfolio source archive') }}
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+      - name: Checkout
+      
+        uses: actions/checkout@v4
+        
+
+
+      - name: Expand source archive
+      
+        run: |
+        
+          rm -rf .source-expand
+          
+          mkdir .source-expand
+          
+          unzip -q ict-cat-portfolio-source.zip -d .source-expand
+          
+          cp -R .source-expand/. ./
+          
+          rm -rf .source-expand ict-cat-portfolio-source.zip ict-cat-portfolio-upload-README.md
+          
+
+
+      - name: Commit expanded source
+      
+        run: |
+        
+          git config user.name "github-actions[bot]"
+          
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          git add -A
+          
+          git diff --cached --quiet || git commit -m "Expand portfolio source files"
+          
+          git push
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
