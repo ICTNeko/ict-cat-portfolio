@@ -221,7 +221,7 @@ export default function Home() {
               </h1>
               <div className="mb-12 max-w-xl mx-auto lg:mx-0 border-l-2 border-accent/20 pl-8 italic">
                 <p className="text-lg md:text-xl leading-relaxed text-primary font-black mb-6">
-                  16冊の著書と多数のベストセラー実績。<br />
+                  19冊の著書と多数のベストセラー実績。<br />
                   「伝える」をデザインする、教育と出版の表現者。
                 </p>
 
@@ -266,7 +266,7 @@ export default function Home() {
                       onClick={() => triggerHaptic(10)}
                       className={`hero-cover hero-cover-${index} group/hero-cover`}
                     >
-                      <img src={book.image} alt={`${book.title} 表紙`} />
+                      <img src={book.image ?? ""} alt={`${book.title} 表紙`} />
                       <span className="hero-cover-tag">{String(index + 1).padStart(2, "0")}</span>
                     </a>
                   ))}
@@ -433,23 +433,29 @@ export default function Home() {
               </div>
               <h2 className="mb-6 text-4xl md:text-7xl font-black tracking-tight font-serif italic text-primary">Archive</h2>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-md italic border-l-2 border-accent/10 pl-6 mx-auto md:mx-0">
-                現役教員の知見を編み直す、Kindle本アーカイブ。
+                現役教員の知見を編み直す、19冊のKindle本アーカイブ。
               </p>
+              <div className="mt-7 flex flex-wrap items-center justify-center md:justify-start gap-3">
+                <span className="rounded-full bg-primary px-4 py-2 text-[10px] font-black tracking-[0.16em] text-primary-foreground">19 TITLES</span>
+                <span className="text-[10px] font-bold tracking-[0.16em] text-accent">気になる表紙をクリック</span>
+              </div>
             </motion.div>
             <div className="flex gap-10 border-b border-border/40 pb-4">
               <button 
+                aria-label={`自著 ${BOOKS.length}冊を表示`}
                 onClick={() => { triggerHaptic(10); setActiveTab("own"); }}
                 className={`flex flex-col items-center group transition-all relative pb-2 ${activeTab === "own" ? "text-primary" : "text-muted-foreground/30 hover:text-foreground"}`}
               >
-                <span className="text-[11px] font-bold tracking-[0.2em]">自著</span>
+                <span className="text-[11px] font-bold tracking-[0.2em]">自著 <small className="ml-1 text-accent">{BOOKS.length}</small></span>
                 <span className="text-[7px] font-bold uppercase tracking-[0.3em] mt-1 font-display italic">Personal</span>
                 {activeTab === "own" && <motion.div layoutId="tab-cafe" className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent" />}
               </button>
               <button 
+                aria-label={`共著 ${COLLABORATIVE_BOOKS.length}冊を表示`}
                 onClick={() => { triggerHaptic(10); setActiveTab("collab"); }}
                 className={`flex flex-col items-center group transition-all relative pb-2 ${activeTab === "collab" ? "text-primary" : "text-muted-foreground/30 hover:text-foreground"}`}
               >
-                <span className="text-[11px] font-bold tracking-[0.2em]">共著</span>
+                <span className="text-[11px] font-bold tracking-[0.2em]">共著 <small className="ml-1 text-accent">{COLLABORATIVE_BOOKS.length}</small></span>
                 <span className="text-[7px] font-bold uppercase tracking-[0.3em] mt-1 font-display italic">Collective</span>
                 {activeTab === "collab" && <motion.div layoutId="tab-cafe" className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent" />}
               </button>
@@ -566,6 +572,10 @@ export default function Home() {
               </motion.div>
             )}
           </AnimatePresence>
+          <div className="mt-20 flex flex-col items-center justify-center gap-5 border-t border-border/30 pt-10 text-center">
+            <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">読んでみたい一冊が見つかったら、表紙または「書誌を見る」からAmazonの商品ページへ。購入前に内容・価格をご確認ください。</p>
+            <a href={SITE_CONFIG.links.amazon_author} target="_blank" rel="noopener noreferrer" onClick={() => triggerHaptic(10)} className="inline-flex items-center gap-3 rounded-full bg-accent px-6 py-3 text-[10px] font-black tracking-[0.2em] text-accent-foreground shadow-lg transition-transform hover:-translate-y-1">著者ページで19冊を見る <ArrowUpRight size={13} /></a>
+          </div>
         </div>
       </section>
 
